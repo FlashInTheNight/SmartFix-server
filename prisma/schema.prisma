@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String
+  password  String   @unique
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BoilerParts {
+  id                  Int      @id @default(autoincrement())
+  boiler_manufacturer String
+  price               Int      @default(0)
+  parts_manufacturer  String
+  vendor_code         String
+  name                String
+  description         String
+  images              String
+  in_stock            Int      @default(0)
+  bestseller          Boolean  @default(false)
+  new                 Boolean  @default(false)
+  popularity          Int
+  compatibility       String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model ShoppingCart {
+  id                  Int      @id @default(autoincrement())
+  userId              Int
+  partId              Int      @default(0)
+  boiler_manufacturer String
+  price               Int      @default(0)
+  parts_manufacturer  String
+  name                String
+  image               String
+  in_stock            Int      @default(0)
+  count               Int      @default(1)
+  total_price         Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
